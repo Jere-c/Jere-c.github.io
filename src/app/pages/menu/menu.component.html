@@ -1,15 +1,34 @@
-<div  uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;  cls-inactive: uk-navbar-transparent uk-dark; top: 50vw">
-    <nav class="dou uk-navbar-container uk-position-top " style="z-index: 1;">
-        <div class="uk-container uk-container-expand">
-            <div uk-navbar>
-                <ul class="uk-navbar-nav uk-navbar-left">
-                    <li><a href="/inicio">Inicio</a></li>
-                    <li><a href="/catalogo">Catalogo</a></li>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
-                </ul>
-            </div>
+<div
+    uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;  cls-inactive: uk-navbar-transparent uk-dark; top: 50vw">
+    <nav class="dou uk-navbar-container uk-position-top" uk-navbar="boundary-align: true; align: center;"
+        style="z-index: 1;">
+        <div class="uk-navbar-left">
+
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="/inicio">Inicio</a>
+                </li>
+                <li>
+                <li>
+                    <a href="/catalogo">Catalogo</a>
+                </li>
+                <li>
+                <li>
+                    <a href="/faq">Item</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAdd"><span uk-icon="plus"></span>Agregar Producto</a>
+                </li>
+                <li>
+                    <a href="#"><span uk-icon="user"></span>Login</a>
+                </li>
+            </ul>
         </div>
     </nav>
 </div>

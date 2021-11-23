@@ -1,6 +1,48 @@
-<div uk-grid>
+<div uk-grid class="cards-catalogo">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
-        <h3 class="uk-card-title">{{product.name}}</h3>
-        <img src="{{product.img}}">
+        <div>
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-media-top">
+                    <img class="card-img" src="{{product.img}}" alt="">
+                    <div class="uk-position-right" style="z-index: 1; padding: 5%;">
+                        <a uk-icon='trash'  (click)="delete(product.id)" class="uk-icon-button" style="color: rgb(191, 0, 0);"></a>
+                    </div>
+                </div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title">{{product.name}}</h3>
+                    <h5 class="uk-card-price">{{product.price}}</h5>
+                    <p></p>
+                    <button class="uk-button uk-button-secondary uk-width-1-1">Ver mas</button>
+                    <button class="uk-button uk-button-danger uk-width-1-1">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="formulario" (ngSubmit)="aceptar()">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="" id="nombre" class="form-control" formControlName="name"
+                        placeholder="nombre"><br>
+
+                    <label for="precio">Precio</label>
+                    <input type="number" name="" id="precio" class="form-control" formControlName="price"
+                        placeholder="precio"><br>
+
+                    <label for="imagen">Imagen</label>
+                    <input type="text" name="" id="imagen" class="form-control" formControlName="image"
+                        placeholder="imagen">
+                    <hr>
+                    <button data-bs-dismiss="modal" class="btn btn-primary">aceptar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
