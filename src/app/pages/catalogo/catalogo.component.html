@@ -1,3 +1,5 @@
+<!-- ngFor de los productos -->
+
 <div uk-grid class="cards-catalogo">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
@@ -20,11 +22,14 @@
     </div>
 </div>
 
+<!-- Modal para agregar productos -->
+
 <div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalAddLabel">Modal title</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
             </div>
             <div class="modal-body">
                 <form action="" [formGroup]="formulario" (ngSubmit)="aceptar()">
@@ -40,7 +45,7 @@
                     <input type="text" name="" id="imagen" class="form-control" formControlName="image"
                         placeholder="imagen">
                     <hr>
-                    <button data-bs-dismiss="modal" class="btn btn-primary">aceptar</button>
+                    <button  class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
                 </form>
             </div>
         </div>

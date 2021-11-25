@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService, IdProducto, producto } from '../../services/firestore/firestore.service';
 
 @Component({
   selector: 'app-inicio',

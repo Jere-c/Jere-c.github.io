@@ -17,7 +17,13 @@ import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CarouselComponent } from './pages/carousel/carousel.component';
 import { LoginaComponent } from './pages/logina/logina.component';
+
+//Formularios Reactivos
 import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+//Toastr Alertas 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,7 +44,9 @@ import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AppRoutingModule
+    AppRoutingModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,    
   ],
   providers: [],
   bootstrap: [AppComponent]

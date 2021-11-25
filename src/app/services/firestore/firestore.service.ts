@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import {map} from 'rxjs/operators';
 import { Observable, observable, pipe } from 'rxjs';
 
+//interfaces del producto
 export interface IdProducto extends producto{
   id:string;
 }
@@ -16,6 +17,9 @@ export interface producto{
   price:number,
   img:string,
 }
+
+//interfaces de preguntas
+
 
 @Injectable({
   providedIn: 'root'
