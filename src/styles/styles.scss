@@ -1,6 +1,7 @@
  /* Custom SCSS/SASS Files */
  @import 'variables';
- @import 'mixins';
+ @import "bourbon";
+ @import 'mixins'; 
  @import 'custom';
  /* UIKit */
  @import "variables-theme.scss";
@@ -8,4 +9,52 @@
  @import "uikit-theme.scss";
  /* ToastR */
  @import '~ngx-toastr/toastr';
+ /*Fuente*/
 
+@import url('https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&display=swap');
+
+
+
+ .loader{
+    position:relative;
+    height:15px;
+    width:50%;
+    overflow:hidden;
+    margin-top: 5%;
+    border-radius:50px;
+    background:hsl(0, 0%, 95%);
+    transition:transform 250ms ease;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .loader::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50px;
+    background:red;
+    animation-name:move;
+    animation-iteration-count:infinite;
+    animation-duration:2s;
+    transition:transform 250ms ease;
+  }
+  
+  @keyframes move{
+    0%{
+      transform:translateX(-100%);
+    }
+    50%{
+      transform:translateX(100%);
+      background:yellow;
+    }
+    
+    100%{
+      transform:translateX(-100%);
+      background:limegreen;
+    }
+  }
+  
+  .loader:hover::before{
+    transform:translateX(10px);
+  }

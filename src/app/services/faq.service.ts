@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+
+//importamos las librerias del observable
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+//Interfaces de las preguntas
 export interface IdQuestion extends question{
   id:string;
 }
@@ -56,9 +59,5 @@ export class FaqService {
         return {id, ...data}
       })
     )
-  }
-  
-  editQuestion(){
-
   }
 }

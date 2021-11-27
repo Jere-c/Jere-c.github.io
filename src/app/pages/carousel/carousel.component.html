@@ -1,46 +1,13 @@
-
 <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
 
     <ul class="uk-slider-items uk-grid">
-        <li class="uk-width-1-1">
-            <div class="uk-panel">
-                <img class="slider-images" src="https://getuikit.com/docs/images/photo.jpg" alt="">
-                <div class="uk-position-center uk-text-center">
-                    <h2 uk-slider-parallax="x: 100,-100">Heading</h2>
-                    <p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-        <li class="uk-width-5-5">
-            <div class="uk-panel">
-                <img src="https://getuikit.com/docs/images/dark.jpg" alt="">
-                <div class="uk-position-center uk-text-center">
-                    <h2 uk-slider-parallax="x: 100,-100">Heading</h2>
-                    <p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-        <li class="uk-width-5-5">
-            <div class="uk-panel">
-                <img src="https://getuikit.com/docs/images/light.jpg" alt="">
-                <div class="uk-position-center uk-text-center">
-                    <h2 uk-slider-parallax="x: 100,-100">Heading</h2>
-                    <p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-        <li class="uk-width-5-5">
-            <div class="uk-panel">
-                <img src="https://getuikit.com/docs/images/photo2.jpg" alt="">
-                <div class="uk-position-center uk-text-center">
-                    <h2 uk-slider-parallax="x: 100,-100">Heading</h2>
-                    <p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-        <li class="uk-width-5-5">
-            <div class="uk-panel">
-                <img src="https://getuikit.com/docs/images/photo3.jpg" alt="">
+        <li class="uk-width-1-1" *ngFor="let img of imgs">
+            <div class="uk-panel ">
+                    <div class="uk-position-right" style="z-index: 1; padding-top: 5%; padding-right: 3%;">
+                        <a uk-icon='trash' *ngIf="user" class="uk-icon-button" style="padding-right: 3%; color: rgb(191, 0, 0); "(click)="delete(img.id)"></a>
+                        <a uk-icon='cog' *ngIf="user" data-bs-toggle="modal" data-bs-target="#ModalEditCarousel" class="uk-icon-button" style="color: rgb(191, 0, 0);"></a>
+                    </div>
+                <img class="slider-images" [src]="img.img" alt="">
                 <div class="uk-position-center uk-text-center">
                     <h2 uk-slider-parallax="x: 100,-100">Heading</h2>
                     <p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -49,7 +16,53 @@
         </li>
     </ul>
 
-    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
-    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+        uk-slider-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+        uk-slider-item="next"></a>
 
+
+<!-- Modal agregar foto -->
+</div>
+<div class="modal fade" id="ModalAddCarousel" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddLabel">Modal title</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="formCarousel" (ngSubmit)="addImg()">
+                    <label for="imagen">Imagen</label>
+                    <input type="file" id="imagen" class="form-control" (change)="selectImage($event)"
+                        [disabled]="state" placeholder="imagen"><br>
+                    <button class="uk-button uk-button-secondary  uk-width-1-1" [disabled]="state">aceptar</button>
+                </form>
+                <div *ngIf="state" class="loader uk-width-1-1"></div>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Foto -->
+<div class="modal fade" id="ModalEditCarousel" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalEditLabel">Modal title</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="editCarousel">
+                    <label for="imagen">Imagen</label>
+                    <input type="file" id="imagen" class="form-control" (change)="selectImage($event)"
+                        [disabled]="state" placeholder="imagen"><br>
+                    <button class="uk-button uk-button-secondary  uk-width-1-1"  (click)="update()" [disabled]="state">aceptar</button>
+                </form>
+                <div *ngIf="state" class="loader uk-width-1-1"></div>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
+            </div>
+        </div>
+    </div>
 </div>

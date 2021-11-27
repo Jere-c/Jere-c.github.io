@@ -2,7 +2,34 @@
     background-color:none;
 }
 .dount{
-    background-color: #f8f8f8;
-    position: fixed;
-    color:black !important;
+background-color: #05000a ;
+    background-size: 3000px;
+  top: 0; /* required */
+}
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background: #05000a ;
+}
+
+.dount a{
+        color:#ffffff !important;
+        font-family: 'Staatliches', cursive;
+        font-size: 18px;
+    }
+
+.dou a{
+    color:#ffffff !important;
+    font-family: 'Staatliches', cursive;
+    font-size: 18px;
+}
+
+.logout{
+    color:#f30102 !important;
+    color:#6e00a7 ;
+    color: #01e8c2;
+    color: #f30102;
+}
+
+.login{
+    color: #01e8c2 !important;
 }

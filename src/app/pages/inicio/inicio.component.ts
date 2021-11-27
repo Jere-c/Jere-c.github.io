@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirestoreService, IdProducto, producto } from '../../services/firestore/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService, IdProduct } from 'src/app/services/firestore/firestore.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +8,21 @@ import { FirestoreService, IdProducto, producto } from '../../services/firestore
   styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit {
+  user!:any;
 
-  constructor() { }
+  products!:IdProduct[];
 
+  constructor(
+    private auth: AuthService,
+    private $productservice:FirestoreService
+    ){
+    this.$productservice.getCarouselProducts().subscribe(data => {
+      this.products = data;
+    }) 
+    this.auth.logState().subscribe(resp => {
+      this.user = resp;
+    })
+  }
   ngOnInit(): void {
   }
 

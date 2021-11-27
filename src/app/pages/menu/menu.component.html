@@ -1,10 +1,10 @@
-<div
-    uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;  cls-inactive: uk-navbar-transparent uk-dark; top: 50vw">
+<div 
+    uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;  cls-inactive: uk-navbar-transparent uk-dark; top: 990rem">
     <nav class="dou uk-navbar-container uk-position-top" uk-navbar="boundary-align: true; align: center;"
         style="z-index: 1;">
         <div class="uk-navbar-left">
 
-            <ul class="uk-navbar-nav">
+            <ul class="uk-navbar-nav" >
                 <li>
                     <a href="/inicio">Inicio</a>
                 </li>
@@ -23,14 +23,23 @@
 
         </div>
 
-        <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav">
-                <li>
-                    <a data-bs-toggle="modal" data-bs-target="#ModalAdd"><span uk-icon="plus"></span>Agregar
-                        Producto</a>
+        <div class="uk-navbar-right" >
+            <ul class="uk-navbar-nav" uk-scrollspy="cls: uk-animation-slide-top; target: .nashe; delay: 100;">
+                <li *ngIf="addProductButton && user"class="nashe">
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAdd"><span style="color:green" uk-icon="plus"></span>Agregar
+                        Producto Nuevo</a>
                 </li>
-                <li>
-                    <a href="#"><span uk-icon="user"></span>Login</a>
+                <li *ngIf="addQuestionButton && user"class="nashe">
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAddQuestion"><span style="color:green" uk-icon="plus"></span>Agregar Pregunta Nueva</a>
+                </li>
+                <li *ngIf="addImgButton && user" class="nashe">
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAddCarousel"><span style="color:green" uk-icon="plus"></span>Agregar Imagen Nueva</a>
+                </li>
+                <li *ngIf="!user" class="nashe">
+                    <a href="/loginadmin" class=" loginb"><span class="login" uk-icon="user"><span class="spanlogin" data-content="Login" aria-hidden="true"></span></span>Login</a>
+                </li>
+                <li *ngIf="user" class="nashe ">
+                    <a (click)="logOut()" href="/loginadmin"><span class="logout" uk-icon="user"></span>LogOut</a>
                 </li>
             </ul>
         </div>

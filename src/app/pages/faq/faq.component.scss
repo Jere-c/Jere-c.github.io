@@ -1,44 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Meera+Inimai&display=swap');
+.uk-accordion-title{
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.12rem;
+    color: #490049;  
+    background-color: #016370 ;
+    padding: 1%;
+    text-transform: capitalize;
+    border-radius: 10px;
+    font-family: 'Meera Inimai', sans-serif;
+}
 
-  .loader{
-    position:relative;
-    height:15px;
-    width:50%;
-    overflow:hidden;
-    margin-top: 5%;
-    border-radius:50px;
-    background:hsl(0, 0%, 95%);
-    transition:transform 250ms ease;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .loader::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:50px;
-    background:red;
-    animation-name:move;
-    animation-iteration-count:infinite;
-    animation-duration:2s;
-    transition:transform 250ms ease;
-  }
-  
-  @keyframes move{
-    0%{
-      transform:translateX(-100%);
-    }
-    50%{
-      transform:translateX(100%);
-      background:yellow;
-    }
-    
-    100%{
-      transform:translateX(-100%);
-      background:limegreen;
-    }
-  }
-  
-  .loader:hover::before{
-    transform:translateX(10px);
-  }
+a{
+    color: rgb(255, 255, 255);
+}
+
+.uk-open{
+    background-color: #007185 ;
+    color: white;
+    border-radius: 10px;
+}
+
+.uk-open:hover{
+    transform: scale(1.01);
+    transition: ease-in-out 0.1s transform;
+}
+
+
+.uk-icon{
+    font-size: 90px;
+}
+
+.uk-background-secondary {
+    background-color: transparent;
+}
+
+.faqH1{
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.12rem;
+    font-family: 'Meera Inimai', sans-serif;
+    font-weight: 900;
+    color: #016370 ;  
+    padding: 1%;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+

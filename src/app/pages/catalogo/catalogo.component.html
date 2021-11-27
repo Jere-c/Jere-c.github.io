@@ -1,21 +1,56 @@
 <!-- ngFor de los productos -->
 
-<div uk-grid class="cards-catalogo">
+<div uk-grid class="cards-catalogo" uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 75;" *ngIf="!user">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
             <div class="uk-card uk-card-default">
                 <div class="uk-card-media-top">
                     <img class="card-img" src="{{product.img}}" alt="">
                     <div class="uk-position-right" style="z-index: 1; padding: 5%;">
-                        <a uk-icon='trash'  (click)="delete(product.id)" class="uk-icon-button" style="color: rgb(191, 0, 0);"></a>
+                        <a uk-icon='trash' *ngIf="user" class="uk-icon-button" (click)="delete(product.id)"
+                            style="color: rgb(191, 0, 0);"></a>
+                    </div>
+                    <div class="uk-position-left" style="z-index: 1; padding: 5%;">
+                        <a uk-icon='star' *ngIf="user" class="uk-icon-button" (click)="starProduct(product.id, product.starred!)"
+                            style="color: yellow"></a>
                     </div>
                 </div>
                 <div class="uk-card-body">
                     <h3 class="uk-card-title">{{product.name}}</h3>
-                    <h5 class="uk-card-price">{{product.price}}</h5>
+                    <h5 class="uk-card-price">{{product.price | currency:'ARS':'$':'3.2-2'}}</h5>
                     <p></p>
-                    <button class="uk-button uk-button-secondary uk-width-1-1">Ver mas</button>
-                    <button class="uk-button uk-button-danger uk-width-1-1">Editar</button>
+                    <button class="uk-button uk-button-secondary uk-width-1-1" data-bs-toggle="modal"
+                    data-bs-target="#ModalSeeProduct"  >Ver mas</button>
+                    <button class="uk-button uk-button-danger uk-width-1-1" data-bs-toggle="modal"
+                        data-bs-target="#ModalEditProduct" *ngIf="user" (click)="openProductEdit(product.id)">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div uk-grid class="cards-catalogo" *ngIf="user">
+    <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
+        <div>
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-media-top">
+                    <img class="card-img" src="{{product.img}}" alt="">
+                    <div class="uk-position-right" style="z-index: 1; padding: 5%;">
+                        <a uk-icon='trash' *ngIf="user" class="uk-icon-button" (click)="delete(product.id)"
+                            style="color: rgb(191, 0, 0);"></a>
+                    </div>
+                    <div class="uk-position-left" style="z-index: 1; padding: 5%;">
+                        <a uk-icon='star' *ngIf="user" class="uk-icon-button" (click)="starProduct(product.id, product.starred!)"
+                            style="color: yellow"></a>
+                    </div>
+                </div>
+                <div class="uk-card-body card-body">
+                    <h3 class="uk-card-title">{{product.name}}</h3>
+                    <h5 class="uk-card-price">{{product.price | currency:'ARS':'$':'3.2-2'}}</h5>
+                    <p></p>
+                    <button class="uk-button uk-button-secondary uk-width-1-1" data-bs-toggle="modal"
+                    data-bs-target="#ModalSeeProduct">Ver mas</button>
+                    <button class="uk-button uk-button-danger uk-width-1-1" data-bs-toggle="modal"
+                        data-bs-target="#ModalEditProduct" *ngIf="user" (click)="openProductEdit(product.id)">Editar</button>
                 </div>
             </div>
         </div>
@@ -32,7 +67,7 @@
                 <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
             </div>
             <div class="modal-body">
-                <form action="" [formGroup]="formulario" (ngSubmit)="aceptar()">
+                <form action="" [formGroup]="formProduct" (ngSubmit)="addProduct()">
                     <label for="nombre">Nombre</label>
                     <input type="text" name="" id="nombre" class="form-control" formControlName="name"
                         placeholder="nombre"><br>
@@ -41,12 +76,64 @@
                     <input type="number" name="" id="precio" class="form-control" formControlName="price"
                         placeholder="precio"><br>
 
+                    <label for="Descripción">Descripción</label>
+                    <input type="string" name="" id="description" class="form-control" formControlName="description"
+                        placeholder="description"><br>
+
                     <label for="imagen">Imagen</label>
-                    <input type="text" name="" id="imagen" class="form-control" formControlName="image"
-                        placeholder="imagen">
+                    <input type="file"id="imagen" class="form-control" placeholder="imagen" (change)="selectImage($event)" [disabled]="state"><br>
                     <hr>
-                    <button  class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
+                    <button class="uk-button uk-button-secondary uk-width-1-1" [disabled]="state">aceptar</button>
                 </form>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal editar productos -->
+<div class="modal fade" id="ModalEditProduct" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalEditLabel">Modal title</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="editProduct">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="" id="nombre" class="form-control" formControlName="name"
+                        placeholder="nombre"><br>
+
+                    <label for="precio">Precio</label>
+                    <input type="number" name="" id="precio" class="form-control" formControlName="price"
+                        placeholder="precio"><br>
+
+                    <label for="Descripción">Descripción</label>
+                    <input type="string" name="" id="description" class="form-control" formControlName="description"
+                        placeholder="description"><br>
+                    
+                    <label for="imagen">Imagen</label>
+                    <input type="file"id="imagen" class="form-control" placeholder="imagen" (change)="selectImage($event)" [disabled]="state"><br>
+                    <hr>
+                    <button class="uk-button uk-button-secondary uk-width-1-1" [disabled]="state" (click)="update()">aceptar</button>
+                </form>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSeeProduct" tabindex="-1" aria-labelledby="ModalSeeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" *ngFor="let product of products">
+            <div class="modal-header" >
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title" id="ModalSeeProductLabel">Modal title</h5>
+                <p>{{product.name}}</p>
+                <p>{{product.img}}</p>
             </div>
         </div>
     </div>

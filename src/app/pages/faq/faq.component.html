@@ -1,21 +1,37 @@
-<p>faq works!</p>
-<div uk-height-viewport="expand:true">
-    <ul uk-accordion="multiple: true">
-        <li *ngFor="let question of questions">
-            <a class="uk-accordion-title" href="#">{{question.title}}</a>
-            <div class="uk-accordion-content">
-                <p>{{question.description}}</p>
-                <a uk-icon='close' data-bs-dismiss="modal" (click)="delete(question.id)" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
-                <button data-bs-toggle="modal" data-bs-target="#ModalEditQuestion" (click)="openQuestionEdit(question.id)"
-    class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
-            </div>
-        </li>
-    </ul>
-</div>
+<p>.</p>
+<div uk-height-viewport="expand: true">
+    <div class="uk-padding-large uk-padding-remove-horizontal">
+        <div class="uk-section uk-padding-large uk-padding-horizontal-remove uk-section-overlap">
+            <h1 class="faqH1"> preguntas frequentes</h1>
+            <div class="uk-container uk-padding uk-background-secondary">
 
+                <ul uk-accordion="multiple: true" class="uk-width-expand" uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-open; delay: 100;">
+                    <li class="uk-open" *ngFor="let question of questions">
+                        <div class="uk-accordion-title ">
+                            <a class="uk-text-decoration-none" href="#">
+                                <div class="uk-flex ">
+                                    {{question.title}}
+                                    <div class="uk-flex">
+                                        <a style="text-align: center; " uk-icon='cog' data-bs-toggle="modal"
+                                            data-bs-target="#ModalEditQuestion"
+                                            (click)="openQuestionEdit(question.id)" *ngIf="user"></a>
+                                        <a uk-icon='close' data-bs-dismiss="modal" *ngIf="user" (click)="delete(question.id)"
+                                            class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="uk-accordion-content">
+                            <p class=" uk-text-justify uk-text-break uk-padding-small whitespace">
+                                {{question.description}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal para agregar preguntas -->
-<button data-bs-toggle="modal" data-bs-target="#ModalAddQuestion"
-    class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
 <div class="modal fade" id="ModalAddQuestion" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -34,7 +50,7 @@
                     <hr>
                     <button class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
                 </form>
-                <div *ngIf="loading" div class="loader uk-width-1-1"></div>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
             </div>
         </div>
     </div>
@@ -49,7 +65,7 @@
                 <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
             </div>
             <div class="modal-body">
-                <form [formGroup]="editQuestion" >
+                <form [formGroup]="editQuestion">
                     <label for="title">Titulo</label>
                     <input type="text" name="" id="title" class="form-control" formControlName="title"
                         placeholder="Titulo"><br>
@@ -64,3 +80,4 @@
         </div>
     </div>
 </div>
+
