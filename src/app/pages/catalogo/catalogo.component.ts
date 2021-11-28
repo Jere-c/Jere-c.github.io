@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs/operators';
+import { img } from 'src/app/services/carouselimagenes.service';
+import { async } from '@firebase/util';
 
 @Component({
   selector: 'app-catalogo',
@@ -15,17 +17,23 @@ export class CatalogoComponent implements OnInit {
 
   user!:any;
 
-  choclo!:string;
+  activeModal!:boolean;
+
+  selectedProduct: any;
 
   starproduct!:any;
 
   state: boolean = false;
+
+  selectProductImg!: string;
 
   loading = false;
 
   idProduct!: string;
   
   ulr: string = "../../../assets/ND.jpg";
+
+  url!: string;
 
   products!: IdProduct[];
 
@@ -62,7 +70,7 @@ export class CatalogoComponent implements OnInit {
     })
   }
 
-  addProduct() {
+  async addProduct() {
     const product: product = {
       name: this.formProduct.value.name,
       price: this.formProduct.value.price,
@@ -71,12 +79,19 @@ export class CatalogoComponent implements OnInit {
       starred: false
     }
     this.loading = true;
-    this.$productservice.createProduct(product).then(() => {
+    await this.$productservice.createProduct(product).then(() => {
+      window.location.reload()
       this.toastr.success("¡Producto agregado exitosamente!")
       this.loading = false;
     }).catch(error => {
       console.log(error);
       this.loading = false;
+    })
+    this.formProduct.patchValue({
+      name: [''],
+      price: [''],
+      img: [''],
+      description: ['']
     })
   }
 
@@ -85,12 +100,16 @@ export class CatalogoComponent implements OnInit {
       let product : product = {
         starred:true
       };
-      this.$productservice.updateProduct(id, product)
+      this.$productservice.updateProduct(id, product).then(() => {
+        this.toastr.success("El producto fue agregado a destacados correctamente","¡Producto destacado!");
+      })
     } else{
       let product : product = {
         starred:false
       };
-      this.$productservice.updateProduct(id, product)
+      this.$productservice.updateProduct(id, product).then(() => {
+        this.toastr.error("El producto fue eliminado de destacados correctamente","¡Producto eliminado de destacados!");
+      })
     }
   }
 
@@ -99,30 +118,58 @@ export class CatalogoComponent implements OnInit {
   //Obtenemos la id del producto selecionado
   openProductEdit(id: string) {
     this.idProduct = id;
-    this.$productservice.getProduct(id).subscribe(data =>
+    this.$productservice.getProduct(id).subscribe(product => {
       this.editProduct.patchValue({
-        name: data.name,
-        price: data.price,
-        img: data.img,
-        description: data.description,
-        starred: data.price
-      }))
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        starred: product.price
+      })
+      if (product.img){
+        this.selectProductImg = product.img;
+      }
+    })
   }
   
-
-  delete(id:string){
-    this.$productservice.deleteProduct(id);
+  selectProduct(product:product){
+    this.activeModal = true;
+    this.selectedProduct = product;
   }
 
-  update(){
-    const product:product ={
-      name: this.editProduct.value.name,
-      price: this.editProduct.value.price,
-      img: this.ulr,
-      description: this.editProduct.value.description,
-      starred: this.editProduct.value.starred
+  delete(id:string){
+    this.$productservice.deleteProduct(id).then(() => {
+      this.toastr.error("El producto fue eliminado correctamente","¡Producto eliminado!");
+    })
+  }
+
+async update(){
+    if(this.url){
+      const product:product ={
+        name: this.editProduct.value.name,
+        price: this.editProduct.value.price,
+        img: this.url,
+        description: this.editProduct.value.description,
+        starred: this.editProduct.value.starred
+      }
+      await this.$productservice.updateProduct(this.idProduct, product).then(asd=>{
+        window.location.reload()}
+      )
+    } else{
+      const product:product ={
+        name: this.editProduct.value.name,
+        price: this.editProduct.value.price,
+        img: this.selectProductImg,
+        description: this.editProduct.value.description,
+        starred: this.editProduct.value.starred
+      }
+      this.$productservice.updateProduct(this.idProduct, product)
     }
-    this.$productservice.updateProduct(this.idProduct, product)
+    this.editProduct.patchValue({
+      name: [''],
+      price: [''],
+      img: [''],
+      description: ['']
+    })
   }
 
   async selectImage(event: any){
@@ -133,7 +180,8 @@ export class CatalogoComponent implements OnInit {
     this.$productservice.returnRef(editedName)
     await this.$productservice.uploadImage(editedName, fileP)
     await this.$productservice.returnRef(editedName).getDownloadURL().toPromise().then((donwloadURL:any)=>{
-      this.ulr = donwloadURL
+      this.ulr = donwloadURL;
+      this.url = donwloadURL;
     })
     this.state = false
   }

@@ -11,15 +11,17 @@ cards{
     background-color: #3b3c3e;
     color: white;
     border-radius: 1%;
+    height: 500px;
     box-shadow: 9px 10px 40px -11px rgba(0,0,0,0.75);
 -webkit-box-shadow: 9px 10px 40px -11px rgba(0,0,0,0.75);
 -moz-box-shadow: 9px 10px 40px -11px rgba(0,0,0,0.75);
     transition: box-shadow 267ms ease,transform 267ms ease;
 }
 
-h3{
+h4{
     text-transform: capitalize;
     color: white!important;
+    font-size: 1.05rem;
 }
 
 .uk-card-price{
@@ -55,8 +57,27 @@ box-shadow: 10px 10px 40px 0px rgba(0,0,0,0.75);
 }
 
 .card-img{
-    width: 100%;
-    height: 15rem;
-    object-fit: cover;
+    width: 350px;
+    height: 300px;
 }
 
+.uk-card{
+    height: 100%;
+}
+
+.uk-badge{  
+    color: #B3FFB1 !important;
+}
+
+.imagen-card
+{
+    padding: 10%;
+}
+
+.div-imagen-see{
+    width: 70%;
+}
+
+.div-para-see{
+    width: 100%;
+}
