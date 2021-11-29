@@ -24,6 +24,9 @@ const routes: Routes = [
   },
   {
     path: '', component:InicioComponent
+  },
+  {
+    path: '**', component:InicioComponent
   }
   
 
