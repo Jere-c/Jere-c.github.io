@@ -51,11 +51,11 @@ export class CarouselComponent implements OnInit {
       })
     }
   }
-
+//Metodo para eliminar la imagen del carousel.
   delete(id:string){
     return this.$carouseliservice.deleteImg(id)
   }
-
+//Abre el modal y obtiene la id de la imagen.
   openEdit(id: string) {
     this.IdImg = id;
     this.$carouseliservice.getImg(id).subscribe(data=>
@@ -63,14 +63,7 @@ export class CarouselComponent implements OnInit {
         img: data.img
       }))
   }
-
-  update(){
-    const img:img ={
-      img: this.ulr,
-    }
-    this.$carouseliservice.updateImg(this.IdImg, img);
-  }
-
+//Agrega la imagen a la base de datos.
   addImg(){
     const img:img = {
       img : this.ulr,
@@ -85,7 +78,7 @@ export class CarouselComponent implements OnInit {
       this.loading = false;
     })
   }
-
+//Selecciona la imagen para subirla.
   async selectImage(event: any){
     this.state = true;
     const fileP = event.target.files[0]

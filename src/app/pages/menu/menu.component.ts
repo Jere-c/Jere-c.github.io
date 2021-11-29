@@ -64,7 +64,7 @@ export class MenuComponent implements OnInit {
       })
     })
   }
-
+//Actualizamos el contacto
   update(id:string){
     this.idcontact = id
     const contact: contact = {
@@ -78,7 +78,7 @@ export class MenuComponent implements OnInit {
       this.toastr.success("¡Editado con exito!")
     });
   }
-
+//Patcheamos el contacto
   ngOnInit(): void {
     this.idcontact = 'jOBaxTwkF2BRBHuLLRWg'
     this.$contactservice.getContact(this.idcontact).subscribe(contact =>{
@@ -91,10 +91,12 @@ export class MenuComponent implements OnInit {
       })
     })
   }
-
+//Cerramos sesión y nos dirigimos al comoponente del login
   logOut(){
     this.auth.logOut().then(()=>{
-      this.router.navigate(['/loginadmin'])
+      this.router.navigate(['/loginadmin']).then(()=>{
+        window.location.reload()
+      })
     })
   }
 

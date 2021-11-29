@@ -77,6 +77,6 @@ export class FaqComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      document.querySelector('.dou')?.classList.add('dount')
+      document.querySelector('.dou')?.classList.add('dount') //Estas clases estan utilizadas para modificar el navbar
     }
   }

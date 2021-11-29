@@ -137,13 +137,13 @@ export class CatalogoComponent implements OnInit {
     this.activeModal = true;
     this.selectedProduct = product;
   }
-
+//Elimina el producto 
   delete(id: string) {
     this.$productservice.deleteProduct(id).then(() => {
       this.toastr.error("El producto fue eliminado con exito", "¡Producto eliminado!");
     })
   }
-
+//Actualiza el producto.
   async update() {
     if (this.url) {
       const product: product = {
@@ -179,7 +179,7 @@ export class CatalogoComponent implements OnInit {
       description: ['']
     })
   }
-
+//Se selecciona la imagen para subirla a la base de datos y luego mostrarla.
   async selectImage(event: any) {
     this.state = true;
     const fileP = event.target.files[0]
@@ -197,7 +197,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    document.querySelector('.dou')?.classList.add('dount')
+    document.querySelector('.dou')?.classList.add('dount') //Estas clases estan utilizadas para modificar el navbar
   }
 
 

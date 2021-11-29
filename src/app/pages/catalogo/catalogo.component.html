@@ -1,9 +1,9 @@
 <!-- ngFor de los productos -->
 
-<div uk-height-viewport="expand: true" uk-grid class="cards-catalogo uk-grid" *ngIf="!user">
-    <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
+<div uk-height-viewport="expand: true" uk-grid class="cards-catalogo uk-grid" uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay:100;" *ngIf="!user">
+    <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products" >
         <div>
-            <div class="uk-card uk-card-default">
+            <div  class="uk-card uk-card-default">
                 <div class="uk-card-media-top">
                     <div class="imagen-card">
                         <img class="card-img" src="{{product.img}}" alt="">

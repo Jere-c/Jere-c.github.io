@@ -47,23 +47,23 @@ export class FirestoreService {
       }))
     )
   }
-
+//Crea un producto
   createProduct(product:product): Promise<any>{
     return this.ref.add(product);
   }
-
+//actualiza un producto por id
   updateProduct(id:string, data:product){
     return this.ref.doc(id).update(data);
   }
-
+//elimina un producto por id
   deleteProduct(id:string){
     return this.ref.doc(id).delete();
   }
-
+//Obtiene la coleccion de productos
   getProducts(){
     return this.productCollection;
   }
-
+//muestra unicamente los favoritos.
   getCarouselProducts(){
     return this.fst.collection('product', ref => ref.where('starred', '==', true)).snapshotChanges().pipe(
       map(a => a.map(a =>{
@@ -73,7 +73,7 @@ export class FirestoreService {
     }))
     )
   }
-  
+  //Obtiene un producto por id
   getProduct(id: string){
     return this.ref.doc(id).snapshotChanges().pipe(
       map(a=>{

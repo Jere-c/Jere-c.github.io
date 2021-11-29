@@ -28,7 +28,7 @@ export class LoginaComponent implements OnInit {
   ngOnInit(): void {
     document.querySelector('.dou')?.classList.add('dount')
   }
-
+// Con este metodo nos logueamos y luego navegamos hacia el catalogo.
   logIn(){
     this.$authservice.logIn(this.formAuth.value.username,this.formAuth.value.password).then(() => {
       this.router.navigate(['/catalogo']);

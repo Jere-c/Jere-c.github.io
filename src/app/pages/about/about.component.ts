@@ -40,7 +40,7 @@ export class AboutComponent implements OnInit {
       this.abouts = data;
     })
   }
-
+// Abre el modal y obtiene la id.
   openEditAbout(id: string){
     this.IdAbout = id;
     this.$aboutservice.getAbout(id).subscribe(data=> {
@@ -50,7 +50,7 @@ export class AboutComponent implements OnInit {
       })
     })
   }
-
+// Actualiza la carta del about por id.
   update(id:string){
     this.IdAbout = id
     this.loading = true;
@@ -63,7 +63,7 @@ export class AboutComponent implements OnInit {
     })
     this.loading = false;
   }
-
+//patchea los valores del about. 
   ngOnInit(): void {
     this.IdAbout = 'jOBaxTwkF2BRBHuLLRWg'
     this.$aboutservice.getAbout(this.IdAbout).subscribe(contact =>{

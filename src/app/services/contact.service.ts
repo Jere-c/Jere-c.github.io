@@ -38,11 +38,11 @@ export class ContactService {
       })) 
     )
   }
-
+//Obtiene los contactos
   getContacts(){
     return this.contacts
   }
-
+//obtiene un contacto por id
   getContact(id:string){
     return this.contactCollection.doc(id).snapshotChanges().pipe(
       map(a=> {
@@ -52,7 +52,7 @@ export class ContactService {
       })
     )
   }
-
+//actualiza un contacto por id
   updateContact(id:string, data: contact){
     return this.contactCollection.doc(id).update(data)
   }

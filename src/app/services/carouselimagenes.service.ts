@@ -38,23 +38,19 @@ export class CarouselimagenesService {
       }))
     )
   }
-
+//crea una imagen
   createImg(img: img): Promise<any>{
     return this.ref.add(img);
   }
-
-  updateImg(id:string, data:img){
-    return this.ref.doc(id).update(data);
-  }
-
+//elimina una img
   deleteImg(id:string){
     return this.ref.doc(id).delete();
   }
-
+//obtiene la coleccion de imgs
   getImgs(){
     return this.imgCollection;
   }
-
+//actualiza img
   uploadImage(name:string, data:any){
     return this.fsts.upload(`images-products/${name}`,data)
   }
@@ -62,7 +58,7 @@ export class CarouselimagenesService {
   returnRef(name:string){
     return this.refS.child(name)
   }
-
+//Obtiene una img
   getImg(id:string){
     return this.ref.doc(id).snapshotChanges().pipe(
       map(a=>{

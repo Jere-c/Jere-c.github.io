@@ -34,15 +34,15 @@ export class FaqService {
       }))
     )
   }
-
+//Actualizamos una pregunta
   updateQuestion(id:string, data:question){
     return this.ref.doc(id).update(data);
   }
-  
+//Obtenemos la coleccion de preguntas
   getQuestions(): Observable<any> {
     return this.questionCollection;
   }
-
+//Obtenemos una pregunta por Id
   getQuestion(id:string){
     return this.ref.doc(id).snapshotChanges().pipe(
       map(a=>{

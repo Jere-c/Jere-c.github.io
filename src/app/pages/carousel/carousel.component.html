@@ -41,25 +41,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Editar Foto -->
-<div class="modal fade" id="ModalEditCarousel" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalEditLabel">Modal title</h5>
-                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
-            </div>
-            <div class="modal-body">
-                <form action="" [formGroup]="editCarousel">
-                    <label for="imagen">Imagen</label>
-                    <input type="file" id="imagen" class="form-control" (change)="selectImage($event)"
-                        [disabled]="state" placeholder="imagen"><br>
-                    <button class="uk-button uk-button-secondary  uk-width-1-1"  (click)="update()" [disabled]="state">aceptar</button>
-                </form>
-                <div *ngIf="state" class="loader uk-width-1-1"></div>
-                <div *ngIf="loading" class="loader uk-width-1-1"></div>
-            </div>
-        </div>
-    </div>
-</div>

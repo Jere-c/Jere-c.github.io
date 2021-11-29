@@ -14,18 +14,18 @@ export class AuthService {
   ) {
     this.user = auth.authState;
   }
-
+//Metodo utilizado para loguearse
   logIn(username: string, password: string) {
     return this.auth.signInWithEmailAndPassword(username, password);
   }
 
-
+//Metodo utilizado para desloguearse
   logOut(){
     return this.auth.signOut().then(() => {
       this.toastr.error("Cerraste sesión con exito","¡Hasta luego!", {positionClass: 'toast-top-center', closeButton: true });
     });
   }
-
+//Metodo utilizado para comprobar el estado del usuario (Logueado o deslogueado)
   logState(){
     return this.user;
   }

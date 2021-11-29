@@ -33,15 +33,15 @@ export class AboutService {
       }))
     )
   }
-
+//Actualiza el about por id
   updateAbout(id:string, data:about){
     return this.ref.doc(id).update(data)
   }
-
+//Obtiene la coleccion de tarjetas
   getAbouts(): Observable<any>{
     return this.aboutCollection;
   }
-
+//Obtiene la tarjeta por id
   getAbout(id:string){
     return this.ref.doc(id).snapshotChanges().pipe(
       map(a=>{
