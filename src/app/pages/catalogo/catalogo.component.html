@@ -1,6 +1,6 @@
 <!-- ngFor de los productos -->
 
-<div uk-grid class="cards-catalogo uk-grid" *ngIf="!user">
+<div uk-height-viewport="expand: true" uk-grid class="cards-catalogo uk-grid" *ngIf="!user">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
             <div class="uk-card uk-card-default">
@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-<div uk-grid class="cards-catalogo uk-grid" *ngIf="user">
+<div uk-height-viewport="expand: true" uk-grid class="cards-catalogo uk-grid" *ngIf="user">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
             <div class="uk-card uk-card-default">
@@ -152,19 +152,19 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" *ngIf="activeModal">
             <div class="uk-container-expand" style="display: flex;">
-                <div class="div-imagen-see" style="padding: 1%; background: rgb(80, 80, 80);">
+                <div class="div-imagen-see" style="padding: 1%; background: #3b3c3e">
                     <div class="imagen-see">
                         <img [src]="selectedProduct.img" class="card-img" alt="">
-                        <button style="height: 100%;"
-                            class="uk-button uk-button-secondary uk-width-1-1">contacto</button>
+                        <button data-bs-dismiss="modal" data-bs-target="ModalSeeProduct" style="height: 100%;"
+                            class="uk-button uk-button-danger uk-width-1-1">Cerrar</button>
                     </div>
                     <div class="uk-position-left" style="padding:2%;">
                         <span style="background-color: rgb(29, 29, 29);" class="uk-badge">{{selectedProduct.price |
                             currency:'ARS':'$':'3.2-2'}}</span>
                     </div>
                 </div>
-                <div class="div-para-see" style="background: rgb(80, 80, 80);">
-                    <h3 class="uk-padding-small">{{selectedProduct.name}}</h3>
+                <div class="div-para-see" style="background: #3b3c3e; color: white;">
+                    <h3 style="color: white !important;" class="uk-padding-small">{{selectedProduct.name}}</h3>
                     <p class="uk-padding-small uk-padding-remove-top" style="white-space: pre-line;">
                         {{selectedProduct.description}}</p>
                 </div>
