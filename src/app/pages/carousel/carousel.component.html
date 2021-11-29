@@ -1,11 +1,10 @@
-<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+<div   class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
 
-    <ul class="uk-slider-items uk-grid">
+    <ul style="background-color: black;" class="uk-slider-items uk-grid">
         <li class="uk-width-1-1" *ngFor="let img of imgs">
             <div class="uk-panel ">
                     <div class="uk-position-right" style="z-index: 1; padding-top: 5%; padding-right: 3%;">
                         <a uk-icon='trash' *ngIf="user" class="uk-icon-button" style="padding-right: 3%; color: rgb(191, 0, 0); "(click)="delete(img.id)"></a>
-                        <a uk-icon='cog' *ngIf="user" data-bs-toggle="modal" data-bs-target="#ModalEditCarousel" class="uk-icon-button" style="color: rgb(191, 0, 0);"></a>
                     </div>
                 <img class="slider-images" [src]="img.img" alt="">
                 <div class="uk-position-center uk-text-center">

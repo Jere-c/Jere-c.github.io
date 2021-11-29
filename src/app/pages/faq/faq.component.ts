@@ -62,6 +62,7 @@ export class FaqComponent implements OnInit {
 
 //actualiza los valores de fst
   update(){
+    this.loading = true;
       const question: question = {
         title: this.editQuestion.value.title,
         description: this.editQuestion.value.description

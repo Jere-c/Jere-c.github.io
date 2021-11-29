@@ -1,20 +1,45 @@
 <div>
 
     <div class="container">
-        <div class="p-container">
-            <h1 class="lel">Sobre nosotros</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis odio incidunt magnam, quo delectus ipsam
-                officia velit eveniet minus aperiam accusantium cumque aliquam minima tempore ad ut reprehenderit hic.
-                Exercitationem labore corrupti fugiat, quis perferendis provident veniam fuga sapiente deleniti non
-                repellat molestiae commodi ratione placeat cupiditate maxime soluta, laboriosam quam perspiciatis qui
-                repellendus ut magni vitae eveniet! Quas officiis libero ratione quasi? Sit rerum cum pariatur adipisci
-                assumenda iusto fuga nemo itaque dicta omnis! Labore velit quibusdam nulla vitae.</p>
+        <div class="p-container" *ngFor="let about of abouts">
+            <h1 class="about-h1">{{about.title}}</h1>
+            <p>{{about.description}}</p>
                 <div class="div-button">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#ModalContact" class="uk-width-1-1 btn btn-outline-primary">Contacto</button>
             </div>
+            <button *ngIf="user" type="button" data-bs-toggle="modal" data-bs-target="#ModalEditAbout" class="uk-width-1-1 uk-margin-small btn btn-outline-primary">Editar tarjeta</button>
         </div>
         <div class="i-container">
-            <img class="img-brand" src="../../../assets/nike-logo-png.png">
+            <img class="img-brand" src="../../../assets/undraw_game_day_ucx9.svg">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEditAbout" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalEditLabel">Editar Sobre Nosotros</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="editAbout" (ngSubmit)="update(abouts[0].id)">
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre">Titulo de la tarjeta</label>
+                            <input type="text" name="" id="nombre" class="form-control" formControlName="title"
+                                placeholder="Nombre"><br>
+
+                            <textarea class="uk-textarea uk-text-break" rows="7"
+                                placeholder="Escribe una descripción para la tarjeta" formControlName="description"
+                                maxlength="2000"></textarea>
+                        </div>
+                        <hr>
+                        <button class="uk-button uk-button-secondary uk-width-1-1"  data-bs-dismiss="modal">aceptar</button>
+                    </div>
+                </form>
+                <div *ngIf="loading" class="loader uk-width-1-1"></div>
+            </div>
         </div>
     </div>
 </div>
