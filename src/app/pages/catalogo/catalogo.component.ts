@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FirestoreService, IdProduct, product} from '../../services/firestore/firestore.service';
+import { FirestoreService, IdProduct, product } from '../../services/firestore/firestore.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NavigationEnd, Router } from '@angular/router';
@@ -15,13 +15,13 @@ import { async } from '@firebase/util';
 })
 export class CatalogoComponent implements OnInit {
 
-  user!:any;
+  user!: any;
 
-  activeModal!:boolean;
+  activeModal!: boolean;
 
   selectedProduct: any;
 
-  starproduct!:any;
+  starproduct!: any;
 
   state: boolean = false;
 
@@ -30,7 +30,7 @@ export class CatalogoComponent implements OnInit {
   loading = false;
 
   idProduct!: string;
-  
+
   ulr: string = "../../../assets/ND.jpg";
 
   url!: string;
@@ -46,24 +46,25 @@ export class CatalogoComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private toastr: ToastrService,
     private $productservice: FirestoreService,
-    private auth: AuthService
-    ) {
+    private auth: AuthService,
+    private router: Router,
+  ) {
     this.auth.logState().subscribe(resp => {
       this.user = resp;
     })
     this.formProduct = this.fb.group({
       name: [''],
-      price: ['0000000000'],
+      price: ['000'],
       img: ['../../../assets/ND.jpg'],
       description: [''],
-      starred:['']
+      starred: ['']
     })
     this.editProduct = this.fb.group({
       name: [''],
       price: [''],
       img: [''],
       description: [''],
-      starred:['']
+      starred: ['']
     })
     this.$productservice.getProducts().subscribe(data => {
       this.products = data;
@@ -80,7 +81,8 @@ export class CatalogoComponent implements OnInit {
     }
     this.loading = true;
     await this.$productservice.createProduct(product).then(() => {
-      window.location.reload()
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/catalogo']));
       this.toastr.success("¡Producto agregado exitosamente!")
       this.loading = false;
     }).catch(error => {
@@ -95,25 +97,25 @@ export class CatalogoComponent implements OnInit {
     })
   }
 
-  starProduct(id: string, state:boolean){
-    if (!state){
-      let product : product = {
-        starred:true
+  starProduct(id: string, state: boolean) {
+    if (!state) {
+      let product: product = {
+        starred: true
       };
       this.$productservice.updateProduct(id, product).then(() => {
-        this.toastr.success("El producto fue agregado a destacados correctamente","¡Producto destacado!");
+        this.toastr.success("El producto fue agregado a destacados correctamente", "¡Producto destacado!");
       })
-    } else{
-      let product : product = {
-        starred:false
+    } else {
+      let product: product = {
+        starred: false
       };
       this.$productservice.updateProduct(id, product).then(() => {
-        this.toastr.error("El producto fue eliminado de destacados correctamente","¡Producto eliminado de destacados!");
+        this.toastr.error("El producto fue eliminado de destacados correctamente", "¡Producto eliminado de destacados!");
       })
     }
   }
 
-  
+
 
   //Obtenemos la id del producto selecionado
   openProductEdit(id: string) {
@@ -125,44 +127,50 @@ export class CatalogoComponent implements OnInit {
         description: product.description,
         starred: product.price
       })
-      if (product.img){
+      if (product.img) {
         this.selectProductImg = product.img;
       }
     })
   }
-  
-  selectProduct(product:product){
+
+  selectProduct(product: product) {
     this.activeModal = true;
     this.selectedProduct = product;
   }
 
-  delete(id:string){
+  delete(id: string) {
     this.$productservice.deleteProduct(id).then(() => {
-      this.toastr.error("El producto fue eliminado correctamente","¡Producto eliminado!");
+      this.toastr.error("El producto fue eliminado con exito", "¡Producto eliminado!");
     })
   }
 
-async update(){
-    if(this.url){
-      const product:product ={
+  async update() {
+    if (this.url) {
+      const product: product = {
         name: this.editProduct.value.name,
         price: this.editProduct.value.price,
         img: this.url,
         description: this.editProduct.value.description,
         starred: this.editProduct.value.starred
       }
-      await this.$productservice.updateProduct(this.idProduct, product).then(asd=>{
-        window.location.reload()}
+      await this.$productservice.updateProduct(this.idProduct, product).then(asd => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/catalogo']));
+        this.toastr.success("¡Editado con exito!")
+        this.loading = false;
+      }
       )
-    } else{
-      const product:product ={
+    } else {
+      const product: product = {
         name: this.editProduct.value.name,
         price: this.editProduct.value.price,
         img: this.selectProductImg,
         description: this.editProduct.value.description,
         starred: this.editProduct.value.starred
       }
-      this.$productservice.updateProduct(this.idProduct, product)
+      this.$productservice.updateProduct(this.idProduct, product).then(asd =>{
+        this.toastr.success("¡Editado con exito!")
+      })
     }
     this.editProduct.patchValue({
       name: [''],
@@ -172,19 +180,22 @@ async update(){
     })
   }
 
-  async selectImage(event: any){
+  async selectImage(event: any) {
     this.state = true;
     const fileP = event.target.files[0]
     let imageNP = fileP.name
-    let editedName = imageNP.replace(' ','+')
+    let editedName = imageNP.replace(' ', '+')
     this.$productservice.returnRef(editedName)
     await this.$productservice.uploadImage(editedName, fileP)
-    await this.$productservice.returnRef(editedName).getDownloadURL().toPromise().then((donwloadURL:any)=>{
+    await this.$productservice.returnRef(editedName).getDownloadURL().toPromise().then((donwloadURL: any) => {
       this.ulr = donwloadURL;
       this.url = donwloadURL;
+      this.selectProductImg = this.url;
+
     })
     this.state = false
   }
+
   ngOnInit(): void {
     document.querySelector('.dou')?.classList.add('dount')
   }

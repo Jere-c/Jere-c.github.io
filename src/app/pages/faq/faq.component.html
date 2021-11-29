@@ -15,8 +15,6 @@
                                         <a style="text-align: center; " uk-icon='cog' data-bs-toggle="modal"
                                             data-bs-target="#ModalEditQuestion"
                                             (click)="openQuestionEdit(question.id)" *ngIf="user"></a>
-                                        <a uk-icon='close' data-bs-dismiss="modal" *ngIf="user" (click)="delete(question.id)"
-                                            class="uk-icon" style="color: rgb(191, 0, 0);"></a>
                                     </div>
                                 </div>
                             </a>
@@ -27,30 +25,6 @@
                         </div>
                     </li>
                 </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal para agregar preguntas -->
-<div class="modal fade" id="ModalAddQuestion" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalAddLabel">Agregar pregunta</h5>
-                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="formQuestion" (ngSubmit)="addQuestion()">
-                    <label for="title">Titulo</label>
-                    <input type="text" name="" id="title" class="form-control" formControlName="title"
-                        placeholder="Titulo"><br>
-                    <label for="description">Descripción</label>
-                    <input type="text" name="" id="description" class="form-control" formControlName="description"
-                        placeholder="description"><br>
-                    <hr>
-                    <button class="uk-button uk-button-secondary uk-width-1-1">aceptar</button>
-                </form>
-                <div *ngIf="loading" class="loader uk-width-1-1"></div>
             </div>
         </div>
     </div>

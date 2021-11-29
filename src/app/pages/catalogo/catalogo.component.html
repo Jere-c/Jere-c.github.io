@@ -1,7 +1,6 @@
 <!-- ngFor de los productos -->
 
-<div uk-grid class="cards-catalogo" uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 75;"
-    *ngIf="!user">
+<div uk-grid class="cards-catalogo uk-grid" *ngIf="!user">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
             <div class="uk-card uk-card-default">
@@ -10,29 +9,31 @@
                         <img class="card-img" src="{{product.img}}" alt="">
                     </div>
                     <div class="uk-position-right" style="z-index: 1; padding: 5%;">
-                        <a uk-icon='trash' *ngIf="user" class="uk-icon-button" (click)="delete(product.id)"
+                        <a uk-icon='trash' *ngIf="!user" class="uk-icon-button" (click)="delete(product.id)"
                             style="color: rgb(191, 0, 0);"></a>
                     </div>
                     <div class="uk-position-left" style="z-index: 1; padding: 5%;">
-                        <a uk-icon='star' *ngIf="user" class="uk-icon-button"
+                        <a uk-icon='star' *ngIf="!user" class="uk-icon-button"
                             (click)="starProduct(product.id, product.starred!)" style="color: yellow"></a>
                     </div>
                 </div>
                 <div class="uk-card-body card-body">
-                    <h4 class="uk-card-title">{{product.name}}</h4>
+                    <h4 class="uk-card-title uk-text-truncate">{{product.name}}</h4>
                     <h6 class="uk-card-price">{{product.price | currency:'ARS':'$':'3.2-2'}}</h6>
                     <p></p>
+                    <div class="div-buttons">
                     <button class="uk-button uk-button-secondary uk-width-1-1" data-bs-toggle="modal"
                         data-bs-target="#ModalSeeProduct" (click)="selectProduct(product)">Ver mas</button>
                     <button class="uk-button uk-button-danger uk-width-1-1" data-bs-toggle="modal"
-                        data-bs-target="#ModalEditProduct" *ngIf="user"
+                        data-bs-target="#ModalEditProduct" *ngIf="!user"
                         (click)="openProductEdit(product.id)">Editar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div uk-grid class="cards-catalogo" *ngIf="user">
+<div uk-grid class="cards-catalogo uk-grid" *ngIf="user">
     <div class="cards uk-card uk-card-body uk-width-1-4" *ngFor="let product of products">
         <div>
             <div class="uk-card uk-card-default">
@@ -50,14 +51,16 @@
                     </div>
                 </div>
                 <div class="uk-card-body card-body">
-                    <h4 class="uk-card-title">{{product.name}}</h4>
+                    <h4 class="uk-card-title uk-text-truncate">{{product.name}}</h4>
                     <h6 class="uk-card-price">{{product.price | currency:'ARS':'$':'3.2-2'}}</h6>
                     <p></p>
+                    <div class="div-buttons">
                     <button class="uk-button uk-button-secondary uk-width-1-1" data-bs-toggle="modal"
                         data-bs-target="#ModalSeeProduct" (click)="selectProduct(product)">Ver mas</button>
                     <button class="uk-button uk-button-danger uk-width-1-1" data-bs-toggle="modal"
                         data-bs-target="#ModalEditProduct" *ngIf="user"
                         (click)="openProductEdit(product.id)">Editar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,26 +73,33 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalAddLabel">Modal title</h5>
+                <h5 class="modal-title" id="ModalAddLabel">Agregar producto</h5>
                 <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
             </div>
             <div class="modal-body">
                 <form action="" [formGroup]="formProduct" (ngSubmit)="addProduct()">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="" id="nombre" class="form-control" formControlName="name"
-                        placeholder="nombre"><br>
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="" id="nombre" class="form-control" formControlName="name"
+                                placeholder="Nombre"><br>
 
-                    <label for="precio">Precio</label>
-                    <input type="number" name="" id="precio" class="form-control" formControlName="price"
-                        placeholder="precio"><br>
+                            <label for="precio">Precio</label>
+                            <input type="number" name="" id="precio" class="form-control" formControlName="price"
+                                placeholder="Precio"><br>
 
-                    <textarea class="uk-textarea uk-text-break" rows="10" placeholder="Descripción del producto..." formControlName="description" maxlength="2000"></textarea>
-                    <img src="{{ulr}}">
-                    <label for="imagen">Imagen</label>
-                    <input type="file" id="imagen" class="form-control" placeholder="imagen"
-                        (change)="selectImage($event)" [disabled]="state"><br>
-                    <hr>
-                    <button class="uk-button uk-button-secondary uk-width-1-1" [disabled]="state">aceptar</button>
+                            <textarea class="uk-textarea uk-text-break" rows="7"
+                                placeholder="Escribe una descripción para el producto" formControlName="description"
+                                maxlength="2000"></textarea>
+                        </div>
+                        <div class="col">
+                            <img class="card-img-modal" src="{{ulr}}">
+                            <input type="file" id="imagen" class="form-control" placeholder="imagen"
+                                (change)="selectImage($event)" [disabled]="state"><br>
+                        </div>
+                        <hr>
+                        <button class="uk-button uk-button-secondary uk-width-1-1" data-bs-dismiss="modal" [disabled]="state">aceptar</button>
+                    </div>
                 </form>
                 <div *ngIf="loading" class="loader uk-width-1-1"></div>
             </div>
@@ -99,31 +109,38 @@
 
 <!-- Modal editar productos -->
 <div class="modal fade" id="ModalEditProduct" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalEditLabel">Modal title</h5>
+                <h5 class="modal-title" id="ModalEditLabel">Editar producto</h5>
                 <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
             </div>
             <div class="modal-body">
                 <form action="" [formGroup]="editProduct">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="" id="nombre" class="form-control" formControlName="name"
-                        placeholder="nombre"><br>
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="" id="nombre" class="form-control" formControlName="name"
+                                placeholder="Nombre"><br>
 
-                    <label for="precio">Precio</label>
-                    <input type="number" name="" id="precio" class="form-control" formControlName="price"
-                        placeholder="precio"><br>
+                            <label for="precio">Precio</label>
+                            <input type="number" name="" id="precio" class="form-control" formControlName="price"
+                                placeholder="Precio"><br>
 
-                        <textarea class="uk-textarea uk-text-break" rows="10" placeholder="Descripción del producto..." formControlName="description" maxlength="2000"></textarea>
-                    <img src="{{selectProductImg}}">
-                    <label for="imagen">Imagen</label>
-                    <div class="uk-flex uk-flex-center uk-flex-middle uk-padding-small uk-padding-remove-horizontal" uk-form-custom>
-                        <input type="file" (change)="selectImage($event)" [disabled]="state">
-                        <button class="uk-button uk-button-danger uk-width-1-2" type="button" tabindex="-1" [disabled]="state">Seleccionar</button>
-                    </div>
-                    <button class="uk-button uk-button-secondary uk-width-1-1" [disabled]="state"
+                            <label for="precio">Descripción</label>
+                            <textarea class="uk-textarea uk-text-break" rows="6"
+                                placeholder="Escribe una descripción para el producto" formControlName="description"
+                                maxlength="2000"></textarea>
+                        </div>
+                        <div class="col">
+                            <img class="card-img-modal" src="{{selectProductImg}}">
+                            <input type="file" id="imagen" class="form-control" placeholder="imagen"
+                                (change)="selectImage($event)" [disabled]="state"><br>
+                        </div>
+                        <hr>
+                        <button class="uk-button uk-button-secondary uk-width-1-1" [disabled]="state" data-bs-dismiss="modal"
                         (click)="update()">aceptar</button>
+                    </div>
                 </form>
                 <div *ngIf="loading" class="loader uk-width-1-1"></div>
             </div>
@@ -135,19 +152,21 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" *ngIf="activeModal">
             <div class="uk-container-expand" style="display: flex;">
-                <div class="div-imagen-see" style="padding: 1%; background: rgb(80, 80, 80);" >
+                <div class="div-imagen-see" style="padding: 1%; background: rgb(80, 80, 80);">
                     <div class="imagen-see">
-                        <img  [src]="selectedProduct.img" class="card-img" alt="">
-                        <button style="height: 100%;" class="uk-button uk-button-secondary uk-width-1-1">contacto</button>
+                        <img [src]="selectedProduct.img" class="card-img" alt="">
+                        <button style="height: 100%;"
+                            class="uk-button uk-button-secondary uk-width-1-1">contacto</button>
                     </div>
                     <div class="uk-position-left" style="padding:2%;">
                         <span style="background-color: rgb(29, 29, 29);" class="uk-badge">{{selectedProduct.price |
                             currency:'ARS':'$':'3.2-2'}}</span>
                     </div>
                 </div>
-                <div  class="div-para-see" style="background: rgb(80, 80, 80);">
+                <div class="div-para-see" style="background: rgb(80, 80, 80);">
                     <h3 class="uk-padding-small">{{selectedProduct.name}}</h3>
-                    <p class="uk-padding-small uk-padding-remove-top" style="white-space: pre-line;">{{selectedProduct.description}}</p>
+                    <p class="uk-padding-small uk-padding-remove-top" style="white-space: pre-line;">
+                        {{selectedProduct.description}}</p>
                 </div>
             </div>
         </div>

@@ -1,1 +1,10 @@
-<p>contacto works!</p>
+<div *ngFor="let contact of contacts">
+<a type="button" class="local btn uk-width-1-1 uk-text-capitalize btn-primary">{{contact.localname}}</a>
+<a type="button" href="{{contact.address}}" class="address btn uk-width-1-1  btn-primary"><span uk-icon="location"></span> Como llegar</a>
+<a type="button" href="{{contact.facebook}}" class="face btn uk-width-1-1  btn-primary"><span uk-icon="facebook"></span>Nuestro Facebook</a>
+<a type="button" class="btn uk-width-1-1 wpp  btn-primary"><span uk-icon="whatsapp"></span> Nuestro numero telefonico {{contact.tnumber}}</a>
+<a type="button" href="{{contact.instagram}}" class="insta btn uk-width-1-1  btn-primary"><span uk-icon="instagram"></span> Nuestro Instagram</a>
+</div>
+<hr>
+<button type="button" *ngIf="user" data-bs-target="#ModalEditContact" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn enviar uk-width-1-1  btn-primary">Guardar cambios</button>
+

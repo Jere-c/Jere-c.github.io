@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,6 +16,8 @@ export class LoginaComponent implements OnInit {
   constructor(
     private fb:FormBuilder,
     private $authservice: AuthService,
+    private toastr: ToastrService,
+    private router: Router,
   ){
     this.formAuth = this.fb.group({
       username:[''],
@@ -26,7 +30,9 @@ export class LoginaComponent implements OnInit {
   }
 
   logIn(){
-    this.$authservice.logIn(this.formAuth.value.username,this.formAuth.value.password)
-    console.log('nashe')
+    this.$authservice.logIn(this.formAuth.value.username,this.formAuth.value.password).then(() => {
+      this.router.navigate(['/catalogo']);
+      this.toastr.success("Iniciaste sesión correctamente","¡Bienvenido!", {positionClass: 'toast-bottom-left', closeButton: true });
+    })
   }
 }

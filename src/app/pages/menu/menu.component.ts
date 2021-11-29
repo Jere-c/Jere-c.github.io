@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { contact, ContactService, IdContact } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,11 +20,20 @@ export class MenuComponent implements OnInit {
 
   addImgButton: boolean = false;
 
+  idcontact!:string;
+
   user!:any;
+
+  editContact!:FormGroup;
+
+  contacts!: IdContact[];
 
   constructor(
     private router:Router,
     private auth:AuthService,
+    private fb:FormBuilder,
+    private $contactservice: ContactService,
+    private toastr: ToastrService
   ) { 
     this.auth.logState().subscribe(resp=>{
       this.user = resp;
@@ -40,13 +52,51 @@ export class MenuComponent implements OnInit {
           this.addImgButton = true;
         }
       }
+      this.$contactservice.getContacts().subscribe((resp =>{
+        this.contacts = resp
+      }))
+      this.editContact = this.fb.group({
+        localname:[''],
+        address:[''],
+        facebook:[''],
+        instagram:[''],
+        tnumber:['']
+      })
     })
   }
 
+  update(id:string){
+    this.idcontact = id
+    const contact: contact = {
+      localname: this.editContact.value.localname,
+      address: this.editContact.value.address,
+      facebook: this.editContact.value.facebook,
+      instagram: this.editContact.value.instagram,
+      tnumber: this.editContact.value.tnumber,
+    }
+    this.$contactservice.updateContact(id, contact).then(asd =>{
+      this.toastr.success("¡Editado con exito!")
+    });
+  }
+
   ngOnInit(): void {
+    this.idcontact = 'jOBaxTwkF2BRBHuLLRWg'
+    this.$contactservice.getContact(this.idcontact).subscribe(contact =>{
+      this.editContact.patchValue({
+        localname: contact.localname,
+        address: contact.address,
+        facebook: contact.facebook,
+        instagram: contact.instagram,
+        tnumber: contact.tnumber,
+      })
+    })
   }
 
   logOut(){
-    this.auth.logOut()
+    this.auth.logOut().then(()=>{
+      this.router.navigate(['/loginadmin'])
+    })
   }
+
+
 }

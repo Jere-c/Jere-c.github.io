@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,6 +10,7 @@ export class AuthService {
   user!: Observable<any>
   constructor(
     private auth: AngularFireAuth,
+    private toastr: ToastrService
   ) {
     this.user = auth.authState;
   }
@@ -19,7 +21,9 @@ export class AuthService {
 
 
   logOut(){
-    return this.auth.signOut();
+    return this.auth.signOut().then(() => {
+      this.toastr.error("Cerraste sesión con exito","¡Hasta luego!", {positionClass: 'toast-top-center', closeButton: true });
+    });
   }
 
   logState(){

@@ -66,31 +66,16 @@ export class FaqComponent implements OnInit {
         title: this.editQuestion.value.title,
         description: this.editQuestion.value.description
       } 
-      this.$questionService.updateQuestion(this.idQuestion, question)
-    }
-
-  //borrar preguntas
-  delete (id: string){
-      this.$questionService.deleteQuestion(id);
-    }
-
-    ngOnInit(): void {
-      document.querySelector('.dou')?.classList.add('dount')
-    }
-
-    //agregar preguntas
-    addQuestion() {
-      const question: question = {
-        title: this.formQuestion.value.title,
-        description: this.formQuestion.value.description,
-      }
-      this.loading = true;
-      this.$questionService.createQuestion(question).then(() => {
-        this.toastr.success("¡Pregunta agregada exitosamente!")
+      this.$questionService.updateQuestion(this.idQuestion, question).then(() => {
+        this.toastr.success("Tu pregunta se edito correctamente","¡Pregunta editada exitosamente!")
         this.loading = false;
       }).catch(error => {
         console.log(error);
         this.loading = false;
       })
+    }
+
+    ngOnInit(): void {
+      document.querySelector('.dou')?.classList.add('dount')
     }
   }

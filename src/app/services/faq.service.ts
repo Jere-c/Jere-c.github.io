@@ -35,18 +35,10 @@ export class FaqService {
     )
   }
 
-  createQuestion(question:question): Promise<any>{
-    return this.ref.add(question)
-  }
-
   updateQuestion(id:string, data:question){
     return this.ref.doc(id).update(data);
   }
   
-  deleteQuestion(id:string){
-    return this.ref.doc(id).delete();
-  }
-
   getQuestions(): Observable<any> {
     return this.questionCollection;
   }

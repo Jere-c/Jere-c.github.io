@@ -1,0 +1,81 @@
+.address{
+    background-color: red;
+    border-color: red;
+    border-radius: 0;
+    transition: transform 267ms ease, background-color 267ms ease;
+}
+
+.face{
+    background-color: #3b5998;
+    border-color: #3b5998;
+    border-radius: 0;
+    transition: transform 267ms ease, background-color 267ms ease;
+}
+
+.insta{
+    background-color: #C13584;
+    border-color: #C13584;
+    border-radius:  0 0 10px 10px;
+    transition: transform 267ms ease, background-color 267ms ease;
+}
+
+.wpp{
+    background-color: #075E54;
+    border-color: #075E54;
+    border-radius: 0;
+    transition: transform 267ms ease, background-color 267ms ease ;
+}
+
+.local{
+    background-color: rgb(5, 141, 112);
+    border-color: rgb(5, 141, 112);
+    border-radius:  10px 10px 0 0 ;
+    transition: transform 267ms ease, background-color 267ms ease;
+}
+
+.local:hover{
+    background-color: rgba(5, 141, 112, 0.767);
+    border-color: rgb(5, 141, 112);
+    border-radius:  10px 10px 0 0 ;
+    transform: scale(1.01);
+}
+
+.address:hover{
+    background-color: rgba(255, 0, 0, 0.685);
+    border-color: red;
+    border-radius: 0;
+    transform: scale(1.01);
+}
+
+.face:hover{
+    background-color: #3b5898ca;
+    border-color: #3b5998;
+    border-radius: 0;
+    transform: scale(1.01);
+}
+
+.insta:hover{
+    background-color: #c13584b7;
+    border-color: #C13584;
+    border-radius:  0 0 10px 10px;
+    transform: scale(1.01);
+}
+
+.wpp:hover{
+    background-color: #075e54bb;
+    border-color: #075E54;
+    border-radius: 0;
+    transform: scale(1.01);
+}
+
+.local:hover{
+    background-color: rgba(5, 141, 112, 0.787);
+    border-color: rgb(5, 141, 112);
+    border-radius:  10px 10px 0 0 ;
+    transform: scale(1.01);
+}
+
+.enviar{
+    background-color: rgb(13, 13, 14);
+    border-color: rgb(13, 13, 14);
+}

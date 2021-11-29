@@ -1,10 +1,10 @@
-<div 
+<div
     uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;  cls-inactive: uk-navbar-transparent uk-dark; top: 990rem">
     <nav class="dou uk-navbar-container uk-position-top" uk-navbar="boundary-align: true; align: center;"
         style="z-index: 1;">
         <div class="uk-navbar-left">
 
-            <ul class="uk-navbar-nav" >
+            <ul class="uk-navbar-nav">
                 <li>
                     <a href="/inicio">Inicio</a>
                 </li>
@@ -17,31 +17,87 @@
                     <a href="/faq">Preguntas Frecuentes</a>
                 </li>
                 <li>
-                    <a href="/about">Sobre Nosotros</a>
+                    <a data-bs-toggle="modal" data-bs-target="#ModalContact">Contacto</a>
                 </li>
             </ul>
-
         </div>
-
-        <div class="uk-navbar-right" >
+        <div class="uk-navbar-right">
             <ul class="uk-navbar-nav" uk-scrollspy="cls: uk-animation-slide-top; target: .nashe; delay: 100;">
-                <li *ngIf="addProductButton && user"class="nashe">
-                    <a data-bs-toggle="modal" data-bs-target="#ModalAdd"><span style="color:green" uk-icon="plus"></span>Agregar
+                <li *ngIf="addProductButton && user" class="nashe">
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAdd"><span style="color:green"
+                            uk-icon="plus"></span>Agregar
                         Producto Nuevo</a>
                 </li>
-                <li *ngIf="addQuestionButton && user"class="nashe">
-                    <a data-bs-toggle="modal" data-bs-target="#ModalAddQuestion"><span style="color:green" uk-icon="plus"></span>Agregar Pregunta Nueva</a>
-                </li>
                 <li *ngIf="addImgButton && user" class="nashe">
-                    <a data-bs-toggle="modal" data-bs-target="#ModalAddCarousel"><span style="color:green" uk-icon="plus"></span>Agregar Imagen Nueva</a>
+                    <a data-bs-toggle="modal" data-bs-target="#ModalAddCarousel"><span style="color:green"
+                            uk-icon="plus"></span>Agregar Imagen Nueva</a>
                 </li>
                 <li *ngIf="!user" class="nashe">
-                    <a href="/loginadmin" class=" loginb"><span class="login" uk-icon="user"><span class="spanlogin" data-content="Login" aria-hidden="true"></span></span>Login</a>
+                    <a href="/loginadmin" class=" loginb"><span class="login" uk-icon="user"><span class="spanlogin"
+                                data-content="Login" aria-hidden="true"></span></span>Login</a>
                 </li>
                 <li *ngIf="user" class="nashe ">
-                    <a (click)="logOut()" href="/loginadmin"><span class="logout" uk-icon="user"></span>LogOut</a>
+                    <a (click)="logOut()"><span class="logout" uk-icon="user"></span>LogOut</a>
                 </li>
             </ul>
         </div>
     </nav>
+</div>
+
+<div class="modal fade" id="ModalContact" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddLabel">Contactos</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <app-contacto>
+
+                </app-contacto>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalEditContact" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddLabel">Editar Contactos</h5>
+                <a uk-icon='close' data-bs-dismiss="modal" class="uk-icon" style="color: rgb(191, 0, 0);"></a>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="editContact" (ngSubmit)="update(contacts[0].id)">
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre">Nombre del local</label>
+                            <input type="text" name="" id="nombre" class="form-control" formControlName="localname"
+                                placeholder="Nombre del local"><br>
+
+                            <label for="direccion">Dirección del local</label>
+                            <input type="text" name="" id="direccion" class="form-control" formControlName="address"
+                                placeholder="Dirección del local"><br>
+
+                            <label for="facebook">Facebook</label>
+                            <input type="text" name="" id="facebook" class="form-control" formControlName="facebook"
+                                placeholder="Facebook"><br>
+
+                            <label for="instagram">Instagram</label>
+                            <input type="text" name="" id="instagram" class="form-control" formControlName="instagram"
+                                placeholder="Instagram"><br>
+
+                            <label for="telefono">Teléfono</label>
+                            <input type="number" name="" id="telefono" class="form-control" formControlName="tnumber"
+                                placeholder="Teléfono"><br>
+                            <hr>
+                        </div>
+                        <button class="uk-button uk-button-secondary uk-width-1-1"
+                            data-bs-dismiss="modal">aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
